@@ -7,32 +7,36 @@ import {
 } from "@ant-design/icons";
 
 const AlumniList = ({ alumni, editForm, deleteAlumni }) => (
-      <ul>
-        {alumni.map((alum) => (
-          <li key={alum.id}>
-            <AlumniCard
-              alum={alum}
-              editForm={editForm}
-              deleteAlumni={deleteAlumni}
-            />
-          </li>
-        ))}
-      </ul>
-)
+  <ul
+    style={{
+      display: "flex", // Use flex display to arrange children in a row
+      flexWrap: "wrap", // Allow items to wrap to the next line
+      listStyleType: "none", // Remove bullet points from list items
+      padding: 0, // Reset padding to remove default ul padding
+      margin: 0, // Optionally, reset margin to remove default ul margin
+    }}
+  >
+    {alumni.map((alum) => (
+      <li key={alum.id}>
+        <AlumniCard
+          alum={alum}
+          editForm={editForm}
+          deleteAlumni={deleteAlumni}
+        />
+      </li>
+    ))}
+  </ul>
+);
 
 const AlumniCard = ({ alum, editForm, deleteAlumni }) => (
   <Card
     style={{ width: 300, marginTop: 16 }}
     actions={[
-      <Button
-        type="primary"
-        icon={<EditOutlined />}
-        onClick={() => editForm(alum)}
-      >
+      <Button icon={<EditOutlined />} onClick={() => editForm(alum)}>
         Edit
       </Button>,
       <Button
-        type="danger"
+        danger
         icon={<DeleteOutlined />}
         onClick={() => deleteAlumni(alum.id)}
       >

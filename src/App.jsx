@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AlumniList from "./components/AlumniList";
+import { Input } from "antd";
 
 function App() {
   const [alumni, setAlumni] = useState([]);
@@ -13,16 +14,16 @@ function App() {
   const [editId, setEditId] = useState(null);
   const [picture, setPicture] = useState(null);
 
+  // Hook to load alumni on component mount
+  useEffect(() => {
+    fetchAlumni();
+  }, []);
+
   // Function to load all alumni
   const fetchAlumni = async () => {
     const response = await axios.get("http://localhost:8888/read.php");
     setAlumni(response.data);
   };
-
-  // Hook to load alumni on component mount
-  useEffect(() => {
-    fetchAlumni();
-  }, []);
 
   // Function to add a new alumni
   const addAlumni = async () => {
@@ -34,12 +35,11 @@ function App() {
     formData.append("major", major);
     formData.append("picture", picture); // Add the picture file to formData
 
-    const resp = await axios.post("http://localhost:8888/create.php", formData, {
+    await axios.post("http://localhost:8888/create.php", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(resp.data)
 
     fetchAlumni(); // Refresh the list
     setFirstname("");
@@ -62,12 +62,16 @@ function App() {
       formData.append("picture", picture); // Add the picture file to formData only if it has been changed
     }
 
-    const response = await axios.post("http://localhost:8888/update.php", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log(response.data)
+    const response = await axios.post(
+      "http://localhost:8888/update.php",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    console.log(response.data);
     fetchAlumni(); // Refresh the list
     // Reset fields
     setEditId(null);
@@ -83,7 +87,7 @@ function App() {
   // Function to delete an alumni
   const deleteAlumni = async (id) => {
     const response = await axios.post("http://localhost/delete.php", { id });
-    console.log("response", response.data)
+    console.log("response", response.data);
     fetchAlumni(); // Refresh the list
   };
 
@@ -101,36 +105,36 @@ function App() {
   return (
     <div>
       <h1>Alumni </h1>
-      <input
+      <Input
         type="text"
         value={firstname}
         onChange={(e) => setFirstname(e.target.value)}
         placeholder="First Name"
       />
-      <input
+      <Input
         type="text"
         value={lastname}
         onChange={(e) => setLastname(e.target.value)}
         placeholder="Last Name"
       />
-      <input
+      <Input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
       />
-      <input
+      <Input
         type="text"
         value={linkedin}
         onChange={(e) => setLinkedin(e.target.value)}
         placeholder="LinkedIn Profile"
       />
-      <input
+      <Input
         type="file"
         onChange={(e) => setPicture(e.target.files[0])} // Add this line in your component
         placeholder="Upload Image"
       />
-      <input
+      <Input
         type="text"
         value={major}
         onChange={(e) => setMajor(e.target.value)}
@@ -147,22 +151,6 @@ function App() {
         editForm={editForm}
         deleteAlumni={deleteAlumni}
       />
-
-      <ul>
-        {alumni.map((alum) => (
-          <li key={alum.id}>
-            {alum.firstname} {alum.lastname} - {alum.email} - {alum.linkedin} -{" "}
-            {alum.major}
-            <br />
-            <img
-              style={{ width: "100px", height: "100px" }}
-              src={`data:image/jpeg;base64,${alum.picture}`}
-            />
-            <button onClick={() => editForm(alum)}>Edit</button>
-            <button onClick={() => deleteAlumni(alum.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
