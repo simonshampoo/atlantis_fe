@@ -14,7 +14,6 @@ function App() {
   const [editId, setEditId] = useState(null);
   const [picture, setPicture] = useState(null);
 
-  // Hook to load alumni on component mount
   useEffect(() => {
     fetchAlumni(setAlumni);
   }, []);
@@ -28,8 +27,7 @@ function App() {
     formData.append("major", major);
     formData.append("picture", picture);
 
-    await addAlumni(formData, () => fetchAlumni(setAlumni)); // Adjusted to use external add function
-    // Reset form fields after adding
+    await addAlumni(formData, () => fetchAlumni(setAlumni));
     setFirstname("");
     setLastname("");
     setEmail("");
@@ -38,7 +36,6 @@ function App() {
     setPicture(null);
   };
 
-  // Wrapper for updating an alumni
   const handleUpdateAlumni = async () => {
     const formData = new FormData();
     formData.append("id", editId);
@@ -51,8 +48,7 @@ function App() {
       formData.append("picture", picture);
     }
 
-    await updateAlumni(formData, () => fetchAlumni(setAlumni)); // Adjusted to use external update function
-    // Reset form fields after updating
+    await updateAlumni(formData, () => fetchAlumni(setAlumni));
     setIsEditing(false);
     setEditId(null);
     setFirstname("");
@@ -64,10 +60,9 @@ function App() {
   };
 
   const handleDeleteAlumni = async (id) => {
-    await deleteAlumni(id, () => fetchAlumni(setAlumni)); // Pass fetchAlumni with setAlumni as callback
+    await deleteAlumni(id, () => fetchAlumni(setAlumni));
   };
 
-  // Function to set the form for editing
   const editForm = (alumni) => {
     setIsEditing(true);
     setEditId(alumni.id);
@@ -107,7 +102,7 @@ function App() {
       />
       <Input
         type="file"
-        onChange={(e) => setPicture(e.target.files[0])} // Add this line in your component
+        onChange={(e) => setPicture(e.target.files[0])}
         placeholder="Upload Image"
       />
       <Input

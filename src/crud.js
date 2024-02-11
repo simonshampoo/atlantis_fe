@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// Assuming baseURL is the same for all requests
 const baseURL = "http://localhost:8888/";
 
 const fetchAlumni = async (setAlumni) => {
@@ -9,9 +8,10 @@ const fetchAlumni = async (setAlumni) => {
 };
 
 const addAlumni = async (formData, fetchAlumni) => {
-  await axios.post(`${baseURL}create.php`, formData, {
+  const response=  await axios.post(`${baseURL}create.php`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
+  console.log(response.data)
   fetchAlumni();
 };
 

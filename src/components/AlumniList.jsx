@@ -9,15 +9,15 @@ import {
 const AlumniList = ({ alumni, editForm, deleteAlumni }) => (
   <ul
     style={{
-      display: "flex", // Use flex display to arrange children in a row
-      flexWrap: "wrap", // Allow items to wrap to the next line
-      listStyleType: "none", // Remove bullet points from list items
-      padding: 0, // Reset padding to remove default ul padding
-      margin: 0, // Optionally, reset margin to remove default ul margin
+      display: "flex", 
+      flexWrap: "wrap",
+      listStyleType: "none", 
+      padding: 0, 
+      margin: 0,
     }}
   >
     {alumni.map((alum) => (
-      <li key={alum.id}>
+      <li style = {{padding: 10}} key={alum.id}>
         <AlumniCard
           alum={alum}
           editForm={editForm}
@@ -30,7 +30,7 @@ const AlumniList = ({ alumni, editForm, deleteAlumni }) => (
 
 const AlumniCard = ({ alum, editForm, deleteAlumni }) => (
   <Card
-    style={{ width: 300, marginTop: 16 }}
+    style={{ width: 300, marginTop: 16}}
     actions={[
       <Button icon={<EditOutlined />} onClick={() => editForm(alum)}>
         Edit
@@ -54,7 +54,7 @@ const AlumniCard = ({ alum, editForm, deleteAlumni }) => (
           <p>
             LinkedIn:
             <a href={alum.linkedin} target="_blank" rel="noopener noreferrer">
-              <LinkedinOutlined style={{ marginLeft: 8 }} />
+              <LinkedinOutlined style={{ paddingLeft: 8 }} />
             </a>
           </p>
         </>
