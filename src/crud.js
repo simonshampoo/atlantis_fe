@@ -8,10 +8,10 @@ const fetchAlumni = async (setAlumni) => {
 };
 
 const addAlumni = async (formData, fetchAlumni) => {
-  const response=  await axios.post(`${baseURL}create.php`, formData, {
+  const response = await axios.post(`${baseURL}create.php`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
-  console.log(response.data)
+  console.log(response.data);
   fetchAlumni();
 };
 

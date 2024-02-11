@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import AlumniList from "./components/AlumniList";
-import { Input } from "antd";
+import AlumniForm from "./components/AlumniForm";
 import { addAlumni, deleteAlumni, fetchAlumni, updateAlumni } from "./crud";
+import { Row, Col, Affix } from "antd";
 
 function App() {
   const [alumni, setAlumni] = useState([]);
@@ -60,6 +61,7 @@ function App() {
   };
 
   const handleDeleteAlumni = async (id) => {
+    console.log("deleting alumni with id: ", id);
     await deleteAlumni(id, () => fetchAlumni(setAlumni));
   };
 
@@ -75,53 +77,67 @@ function App() {
 
   return (
     <div>
-      <h1>Alumni </h1>
-      <Input
-        type="text"
-        value={firstname}
-        onChange={(e) => setFirstname(e.target.value)}
-        placeholder="First Name"
-      />
-      <Input
-        type="text"
-        value={lastname}
-        onChange={(e) => setLastname(e.target.value)}
-        placeholder="Last Name"
-      />
-      <Input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <Input
-        type="text"
-        value={linkedin}
-        onChange={(e) => setLinkedin(e.target.value)}
-        placeholder="LinkedIn Profile"
-      />
-      <Input
-        type="file"
-        onChange={(e) => setPicture(e.target.files[0])}
-        placeholder="Upload Image"
-      />
-      <Input
-        type="text"
-        value={major}
-        onChange={(e) => setMajor(e.target.value)}
-        placeholder="Major"
-      />
-      {isEditing ? (
-        <button onClick={handleUpdateAlumni}>Update Alumni</button>
-      ) : (
-        <button onClick={handleAddAlumni}>Add Alumni</button>
-      )}
-
-      <AlumniList
-        alumni={alumni}
-        editForm={editForm}
-        deleteAlumni={handleDeleteAlumni}
-      />
+      <h1
+        style={{
+          fontWeight: "bold",
+        }}
+      >
+        Atlantis Alumni Management
+      </h1>
+      <h2
+        style={{
+          fontWeight: "normal",
+        }}
+      >
+        Create, edit, and delete alumni to be displayed on the Atlantis
+        homepage.
+      </h2>
+      <Row gutter={[16, 16]} /* This adds spacing between columns and rows */>
+        <Col
+          xs={24}
+          sm={24}
+          md={12}
+          lg={8}
+          xl={6} /* Adjust these values based on your responsive layout needs */
+        >
+          <Affix
+            offsetTop={
+              40
+            } /* Adjust this value to control the distance from the top */
+          >
+            <AlumniForm
+              firstname={firstname}
+              lastname={lastname}
+              email={email}
+              linkedin={linkedin}
+              major={major}
+              setFirstname={setFirstname}
+              setLastname={setLastname}
+              setEmail={setEmail}
+              setLinkedin={setLinkedin}
+              setMajor={setMajor}
+              onSubmit={isEditing ? handleUpdateAlumni : handleAddAlumni}
+              isEditing={isEditing}
+              setPicture={setPicture}
+            />
+          </Affix>
+        </Col>
+        <Col
+          xs={24}
+          sm={24}
+          md={12}
+          lg={16}
+          xl={
+            18
+          } /* Adjust these values based on your responsive layout needs */
+        >
+          <AlumniList
+            alumni={alumni}
+            editForm={editForm}
+            deleteAlumni={handleDeleteAlumni}
+          />
+        </Col>
+      </Row>
     </div>
   );
 }
