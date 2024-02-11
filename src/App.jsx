@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import AlumniList from "./components/AlumniList";
 import { Input } from "antd";
+import { addAlumni, deleteAlumni, fetchAlumni, updateAlumni } from "./crud";
 
 function App() {
   const [alumni, setAlumni] = useState([]);
@@ -16,41 +16,30 @@ function App() {
 
   // Hook to load alumni on component mount
   useEffect(() => {
-    fetchAlumni();
+    fetchAlumni(setAlumni);
   }, []);
 
-  // Function to load all alumni
-  const fetchAlumni = async () => {
-    const response = await axios.get("http://localhost:8888/read.php");
-    setAlumni(response.data);
-  };
-
-  // Function to add a new alumni
-  const addAlumni = async () => {
+  const handleAddAlumni = async () => {
     const formData = new FormData();
     formData.append("firstname", firstname);
     formData.append("lastname", lastname);
     formData.append("email", email);
     formData.append("linkedin", linkedin);
     formData.append("major", major);
-    formData.append("picture", picture); // Add the picture file to formData
+    formData.append("picture", picture);
 
-    await axios.post("http://localhost:8888/create.php", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    fetchAlumni(); // Refresh the list
+    await addAlumni(formData, () => fetchAlumni(setAlumni)); // Adjusted to use external add function
+    // Reset form fields after adding
     setFirstname("");
     setLastname("");
     setEmail("");
     setLinkedin("");
     setMajor("");
+    setPicture(null);
   };
 
-  // Function to update an alumni
-  const updateAlumni = async () => {
+  // Wrapper for updating an alumni
+  const handleUpdateAlumni = async () => {
     const formData = new FormData();
     formData.append("id", editId);
     formData.append("firstname", firstname);
@@ -59,36 +48,23 @@ function App() {
     formData.append("linkedin", linkedin);
     formData.append("major", major);
     if (picture) {
-      formData.append("picture", picture); // Add the picture file to formData only if it has been changed
+      formData.append("picture", picture);
     }
 
-    const response = await axios.post(
-      "http://localhost:8888/update.php",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    console.log(response.data);
-    fetchAlumni(); // Refresh the list
-    // Reset fields
-    setEditId(null);
+    await updateAlumni(formData, () => fetchAlumni(setAlumni)); // Adjusted to use external update function
+    // Reset form fields after updating
     setIsEditing(false);
+    setEditId(null);
     setFirstname("");
     setLastname("");
     setEmail("");
     setLinkedin("");
     setMajor("");
-    setPicture(null); // Reset picture
+    setPicture(null);
   };
 
-  // Function to delete an alumni
-  const deleteAlumni = async (id) => {
-    const response = await axios.post("http://localhost/delete.php", { id });
-    console.log("response", response.data);
-    fetchAlumni(); // Refresh the list
+  const handleDeleteAlumni = async (id) => {
+    await deleteAlumni(id, () => fetchAlumni(setAlumni)); // Pass fetchAlumni with setAlumni as callback
   };
 
   // Function to set the form for editing
@@ -141,15 +117,15 @@ function App() {
         placeholder="Major"
       />
       {isEditing ? (
-        <button onClick={updateAlumni}>Update Alumni</button>
+        <button onClick={handleUpdateAlumni}>Update Alumni</button>
       ) : (
-        <button onClick={addAlumni}>Add Alumni</button>
+        <button onClick={handleAddAlumni}>Add Alumni</button>
       )}
 
       <AlumniList
         alumni={alumni}
         editForm={editForm}
-        deleteAlumni={deleteAlumni}
+        deleteAlumni={handleDeleteAlumni}
       />
     </div>
   );
