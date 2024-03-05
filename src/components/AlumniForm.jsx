@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Form, Input, Button, Upload } from "antd";
+import { Row, Col, Form, Input, Button, Upload, Radio } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
 const AlumniForm = ({
@@ -8,20 +8,19 @@ const AlumniForm = ({
   email,
   linkedin,
   major,
+  isStudent,
   setFirstname,
   setLastname,
   setEmail,
   setLinkedin,
   setMajor,
+  setIsStudent,
   onSubmit,
   isEditing,
   setPicture,
 }) => {
   const handleBeforeUpload = (file) => {
-    // Set the file using the provided setter function
     setPicture(file);
-
-    // Prevent the default upload behavior
     return true;
   };
 
@@ -92,6 +91,15 @@ const AlumniForm = ({
               onChange={(e) => setMajor(e.target.value)}
               placeholder="Major"
             />
+          </Form.Item>
+          <Form.Item label="Current Student">
+            <Radio.Group
+              value={isStudent}
+              onChange={(e) => setIsStudent(1)}
+            >
+              <Radio value={1}>Yes</Radio>
+              <Radio value={0}>No</Radio>
+            </Radio.Group>
           </Form.Item>
           <Form.Item>
             <Button type="primary" onClick={onSubmit}>

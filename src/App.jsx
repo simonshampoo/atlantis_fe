@@ -14,6 +14,7 @@ function App() {
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [picture, setPicture] = useState(null);
+  const [isStudent, setIsStudent] = useState(0);
 
   useEffect(() => {
     fetchAlumni(setAlumni);
@@ -27,6 +28,7 @@ function App() {
     formData.append("linkedin", linkedin);
     formData.append("major", major);
     formData.append("picture", picture);
+    formData.append("isStudent", isStudent);
 
     await addAlumni(formData, () => fetchAlumni(setAlumni));
     setFirstname("");
@@ -35,6 +37,7 @@ function App() {
     setLinkedin("");
     setMajor("");
     setPicture(null);
+    setIsStudent(0);
   };
 
   const handleUpdateAlumni = async () => {
@@ -48,6 +51,7 @@ function App() {
     if (picture) {
       formData.append("picture", picture);
     }
+    formData.append("isStudent", isStudent);
 
     await updateAlumni(formData, () => fetchAlumni(setAlumni));
     setIsEditing(false);
@@ -58,6 +62,7 @@ function App() {
     setLinkedin("");
     setMajor("");
     setPicture(null);
+    setIsStudent(0);
   };
 
   const handleDeleteAlumni = async (id) => {
@@ -73,6 +78,7 @@ function App() {
     setEmail(alumni.email);
     setLinkedin(alumni.linkedin);
     setMajor(alumni.major);
+    setIsStudent(alumni.isStudent);
   };
 
   return (
@@ -111,11 +117,13 @@ function App() {
               email={email}
               linkedin={linkedin}
               major={major}
+              isStudent={isStudent}
               setFirstname={setFirstname}
               setLastname={setLastname}
               setEmail={setEmail}
               setLinkedin={setLinkedin}
               setMajor={setMajor}
+              setIsStudent={setIsStudent}
               onSubmit={isEditing ? handleUpdateAlumni : handleAddAlumni}
               isEditing={isEditing}
               setPicture={setPicture}
