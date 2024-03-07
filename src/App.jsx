@@ -4,7 +4,15 @@ import AlumniForm from "./components/AlumniForm";
 import { addAlumni, deleteAlumni, fetchAlumni, updateAlumni } from "./crud";
 import { Row, Col, Affix } from "antd";
 
+/**
+ * Represents the main application component.
+ * @returns {JSX.Element} The rendered component.
+ */
 function App() {
+  /**
+   * Represents the state of alumni.
+   * @type {Array}
+   */
   const [alumni, setAlumni] = useState([]);
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -20,6 +28,10 @@ function App() {
     fetchAlumni(setAlumni);
   }, []);
 
+  /**
+   * Handles the addition of a new alumni.
+   * @returns {Promise<void>} A promise that resolves when the alumni is added.
+   */
   const handleAddAlumni = async () => {
     const formData = new FormData();
     formData.append("firstname", firstname);
@@ -40,6 +52,10 @@ function App() {
     setIsStudent(0);
   };
 
+  /**
+   * Handles the update of an existing alumni.
+   * @returns {Promise<void>} A promise that resolves when the alumni is updated.
+   */
   const handleUpdateAlumni = async () => {
     const formData = new FormData();
     formData.append("id", editId);
@@ -65,11 +81,20 @@ function App() {
     setIsStudent(0);
   };
 
+  /**
+   * Handles the deletion of an alumni.
+   * @param {number} id - The ID of the alumni to delete.
+   * @returns {Promise<void>} A promise that resolves when the alumni is deleted.
+   */
   const handleDeleteAlumni = async (id) => {
     console.log("deleting alumni with id: ", id);
     await deleteAlumni(id, () => fetchAlumni(setAlumni));
   };
 
+  /**
+   * Sets the form fields to the values of the selected alumni for editing.
+   * @param {Object} alumni - The alumni object to edit.
+   */
   const editForm = (alumni) => {
     setIsEditing(true);
     setEditId(alumni.id);
@@ -99,18 +124,8 @@ function App() {
         homepage.
       </h2>
       <Row gutter={[16, 16]} /* This adds spacing between columns and rows */>
-        <Col
-          xs={24}
-          sm={24}
-          md={12}
-          lg={8}
-          xl={6} /* Adjust these values based on your responsive layout needs */
-        >
-          <Affix
-            offsetTop={
-              40
-            } /* Adjust this value to control the distance from the top */
-          >
+        <Col xs={24} sm={24} md={12} lg={8} xl={6}>
+          <Affix offsetTop={40}>
             <AlumniForm
               firstname={firstname}
               lastname={lastname}

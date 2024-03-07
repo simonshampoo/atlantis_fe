@@ -4,8 +4,6 @@ const baseURL = "https://34.204.247.99/";
 
 const fetchAlumni = async (setAlumni) => {
   const response = await axios.get(`${baseURL}read.php`);
-  console.log("hello")
-  console.log(response.data);
   setAlumni(response.data);
 };
 

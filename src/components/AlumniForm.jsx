@@ -2,6 +2,28 @@ import React from "react";
 import { Row, Col, Form, Input, Button, Upload, Radio } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
+/**
+ * A form component for adding, editing, or deleting alumni.
+ *
+ * @component
+ * @param {Object} props - The component props
+ * @param {string} props.firstname - The first name of the alumni
+ * @param {string} props.lastname - The last name of the alumni
+ * @param {string} props.email - The email of the alumni
+ * @param {string} props.linkedin - The LinkedIn profile URL of the alumni
+ * @param {string} props.major - The major of the alumni
+ * @param {number} props.isStudent - The current student status of the alumni (1 for Yes, 0 for No)
+ * @param {function} props.setFirstname - The function to update the first name
+ * @param {function} props.setLastname - The function to update the last name
+ * @param {function} props.setEmail - The function to update the email
+ * @param {function} props.setLinkedin - The function to update the LinkedIn profile URL
+ * @param {function} props.setMajor - The function to update the major
+ * @param {function} props.setIsStudent - The function to update the current student status
+ * @param {function} props.onSubmit - The function to handle form submission
+ * @param {boolean} props.isEditing - Indicates whether the form is in editing mode
+ * @param {function} props.setPicture - The function to update the profile picture
+ * @returns {JSX.Element} The AlumniForm component
+ */
 const AlumniForm = ({
   firstname,
   lastname,
@@ -19,6 +41,12 @@ const AlumniForm = ({
   isEditing,
   setPicture,
 }) => {
+  /**
+   * Handles the file upload before it is sent to the server.
+   *
+   * @param {File} file - The uploaded file
+   * @returns {boolean} Whether the file should be uploaded or not
+   */
   const handleBeforeUpload = (file) => {
     setPicture(file);
     return true;
@@ -93,10 +121,7 @@ const AlumniForm = ({
             />
           </Form.Item>
           <Form.Item label="Current Student">
-            <Radio.Group
-              value={isStudent}
-              onChange={(e) => setIsStudent(1)}
-            >
+            <Radio.Group value={isStudent} onChange={(e) => setIsStudent(1)}>
               <Radio value={1}>Yes</Radio>
               <Radio value={0}>No</Radio>
             </Radio.Group>

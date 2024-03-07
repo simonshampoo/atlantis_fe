@@ -6,6 +6,14 @@ import {
   LinkedinOutlined,
 } from "@ant-design/icons";
 
+/**
+ * Renders a list of alumni cards.
+ * @param {Object} props - The component props.
+ * @param {Array} props.alumni - The array of alumni objects.
+ * @param {Function} props.editForm - The function to edit an alumni.
+ * @param {Function} props.deleteAlumni - The function to delete an alumni.
+ * @returns {JSX.Element} - The rendered component.
+ */
 const AlumniList = ({ alumni, editForm, deleteAlumni }) => (
   <ul
     style={{
@@ -28,6 +36,14 @@ const AlumniList = ({ alumni, editForm, deleteAlumni }) => (
   </ul>
 );
 
+/**
+ * Renders an alumni card.
+ * @param {Object} props - The component props.
+ * @param {Object} props.alum - The alumni object.
+ * @param {Function} props.editForm - The function to edit the alumni.
+ * @param {Function} props.deleteAlumni - The function to delete the alumni.
+ * @returns {JSX.Element} - The rendered component.
+ */
 const AlumniCard = ({ alum, editForm, deleteAlumni }) => (
   <Card
     style={{ width: 300, marginTop: 16 }}
