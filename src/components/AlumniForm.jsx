@@ -121,7 +121,7 @@ const AlumniForm = ({
             />
           </Form.Item>
           <Form.Item label="Current Student">
-            <Radio.Group value={isStudent} onChange={(e) => setIsStudent(1)}>
+            <Radio.Group value={isStudent} onChange={(e) => setIsStudent(e.target.value)}>
               <Radio value={1}>Yes</Radio>
               <Radio value={0}>No</Radio>
             </Radio.Group>
