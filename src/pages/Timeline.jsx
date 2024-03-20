@@ -60,7 +60,7 @@ const TimelinePage = () => {
           id: currentEntry.id,
           title,
           description,
-          due_date: due_date.format("YYYY-MM-DD"), // Format date to match your backend expectation
+          due_date: due_date.format("YYYY-MM-DD"), 
         },
         {
           headers: {
