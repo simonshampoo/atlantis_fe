@@ -101,12 +101,8 @@ const AlumniForm = ({
             />
           </Form.Item>
           <Form.Item label="Upload Image">
-            {
-              // TODO: FIX THIS
-            }
             <Upload
               name="avatar"
-              showUploadList={true}
               beforeUpload={handleBeforeUpload}
             >
               {uploadButton}
