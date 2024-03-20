@@ -68,7 +68,7 @@ const TimelinePage = () => {
           },
         }
       );
-      console.log(res)
+      console.log(res);
       message.success("Entry updated successfully");
       setIsModalVisible(false);
       fetchEntries();
@@ -111,6 +111,13 @@ const TimelinePage = () => {
   return (
     <div>
       <h1>Timeline</h1>
+      <h2
+        style={{
+          fontWeight: "normal",
+        }}
+      >
+        Manage the Atlantis timeline entries.
+      </h2>
       <Button
         type="primary"
         onClick={showAddModal}
