@@ -18,7 +18,6 @@ const App = () => {
         <Routes>
           <Route path="/student-management" element={<StudentManagement />} />
           <Route path="/timeline" element={<Timeline />} />
-          {/* Redirect to "/timeline" as the default route */}
           <Route path="/" element={<Timeline />} />
         </Routes>
       </div>

@@ -32,7 +32,6 @@ const TimelinePage = () => {
       const res = await axios.post("http://34.204.247.99/timeline/delete.php", {
         id,
       });
-      console.log(res);
       message.success("Entry deleted successfully");
       fetchEntries();
     } catch (error) {
