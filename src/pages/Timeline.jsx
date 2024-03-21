@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, Button, Modal, Form, Input, DatePicker, message } from "antd";
-import moment from "moment"; // For handling date values
+import moment from "moment"; 
 
+/**
+ * Represents a timeline page component.
+ * @component
+ */
 const TimelinePage = () => {
   const [entries, setEntries] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -29,7 +33,7 @@ const TimelinePage = () => {
 
   const deleteEntry = async (id) => {
     try {
-      const res = await axios.post("http://34.204.247.99/timeline/delete.php", {
+      await axios.post("http://34.204.247.99/timeline/delete.php", {
         id,
       });
       message.success("Entry deleted successfully");

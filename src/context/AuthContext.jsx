@@ -4,6 +4,14 @@ const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
+/**
+ * Provides authentication functionality to its child components.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {ReactNode} props.children - The child components to be wrapped by the AuthProvider.
+ * @returns {JSX.Element} The rendered AuthProvider component.
+ */
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 

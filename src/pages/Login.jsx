@@ -3,6 +3,15 @@ import { Card, Form, Input, Button, Row, Col } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+/**
+ * Renders a login form component.
+ *
+ * @component
+ * @example
+ * return (
+ *   <Login />
+ * )
+ */
 const Login = () => {
   const [password, setPassword] = useState("");
   const { login } = useAuth();
